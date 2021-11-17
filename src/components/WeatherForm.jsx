@@ -19,7 +19,7 @@ function WeatherForm(props) {
     const [countryCode, setCountryCode] = useState("");
   
 
-    const apiKey = "a6f518ae0425bd5d7402196d38873879";
+    const apiKey = "apikey";
     const units = "metric";
 
     // building URL
