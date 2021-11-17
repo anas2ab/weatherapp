@@ -8,11 +8,14 @@ function WeatherForm(props) {
     const [weather, setWeather] = useState('');
     const [temperature, setTemperature] = useState(0);
     const [description, setDescription] = useState('');
-    const [pressure, setPressure] = useState(0);
     const [humidity, setHumidity] = useState(0);
     const [hi, setHi] = useState(0);
     const [lo, setLo] = useState(0);
+    const [sunrise, setSunrise] = useState(0);
+    const [sunset, setSunset] = useState(0);
     const [icon, setIcon] = useState("");
+    const [cityName, setCityName] = useState("");
+    const [countryCode, setCountryCode] = useState("");
     
     const apiKey = "a6f518ae0425bd5d7402196d38873879";
     const units = "metric";
@@ -28,7 +31,9 @@ function WeatherForm(props) {
     function handleClick(){
         updateCity("");
     }
-    
+    function convertUnixTime(time) {
+        return new Date(time * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
     // gets the weather from the API
     const fetchWeather = async () => {
         try {
@@ -38,10 +43,14 @@ function WeatherForm(props) {
             setWeather(res.data.weather[0].main);
             setTemperature(Math.round(res.data.main.temp));
             setDescription(res.data.weather[0].description);
-            setPressure(res.data.main.pressure);
             setHumidity(res.data.main.humidity);
             setHi(Math.round(res.data.main.temp_max));
             setLo(Math.round(res.data.main.temp_min));
+            setSunrise(convertUnixTime(res.data.sys.sunrise));
+            setSunset(convertUnixTime(res.data.sys.sunset));
+            setCityName(res.data.name);
+            setCountryCode(res.data.sys.country);
+
             setIcon("http://openweathermap.org/img/wn/" + res.data.weather[0].icon + "@2x.png")
         } catch (err) {
             console.error(err);
@@ -50,7 +59,7 @@ function WeatherForm(props) {
 
     useEffect(() => {
         fetchWeather();
-    },["Toronto, CA"]) // need the dependancy array []
+    },[]) // need the dependancy array []
 
     return (
         <div className="center">
@@ -69,14 +78,16 @@ function WeatherForm(props) {
             <div>
                 <WeatherInfo
                 icon={icon}
-                location={city}
+                city={cityName}
+                country={countryCode}
                 weather={weather}
                 temperature={temperature}
                 description={description}
                 humidity={humidity}
-                pressure={pressure}
                 hi={hi}
                 lo={lo}
+                sunrise={sunrise}
+                sunset={sunset}
                 />
             </div>
         </div>

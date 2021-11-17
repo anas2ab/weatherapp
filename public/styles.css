@@ -11,3 +11,8 @@ td {
 .right {
     text-align: right;;
 }
+.card {
+    background-color: #233f6e;
+    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+    color: white;
+}
