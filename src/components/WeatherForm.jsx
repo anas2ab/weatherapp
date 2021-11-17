@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import WeatherInfo from "./WeatherInfo";
 
+
 function WeatherForm(props) {
     // setting all the states
-    const [city, updateCity] = useState("City, Country");
+    const [city, updateCity] = useState("Toronto, CA");
     const [weather, setWeather] = useState('');
     const [temperature, setTemperature] = useState(0);
     const [description, setDescription] = useState('');
@@ -16,13 +17,14 @@ function WeatherForm(props) {
     const [icon, setIcon] = useState("");
     const [cityName, setCityName] = useState("");
     const [countryCode, setCountryCode] = useState("");
-    
+  
+
     const apiKey = "a6f518ae0425bd5d7402196d38873879";
     const units = "metric";
 
     // building URL
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=" + units;
-    
+
     // handling the change for the input. This saves the state of the input value
     function handleChange(event) {
         updateCity(event.target.value);
